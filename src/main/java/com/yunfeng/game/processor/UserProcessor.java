@@ -5,14 +5,6 @@ import io.netty.handler.codec.http.HttpRequest;
 
 public class UserProcessor implements IHttpProcessor {
 
-	public void process() {
-	}
-
-	public void processUserData(int id, long lid, String username,
-			String password) {
-
-	}
-
 	@Override
 	public void process(ChannelHandlerContext ctx, HttpRequest request,
 			String param) {

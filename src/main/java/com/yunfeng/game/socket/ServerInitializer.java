@@ -9,8 +9,6 @@ import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 
-import com.yunfeng.game.handler.IdleHandler;
-
 public class ServerInitializer extends ChannelInitializer<SocketChannel> {
 
 	@Override

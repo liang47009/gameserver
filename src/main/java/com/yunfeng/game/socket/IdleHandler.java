@@ -1,4 +1,6 @@
-package com.yunfeng.game.handler;
+package com.yunfeng.game.socket;
+
+import com.yunfeng.game.util.Log;
 
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -14,7 +16,7 @@ public class IdleHandler extends ChannelDuplexHandler {
 			if (e.state() == IdleState.READER_IDLE) {
 				ctx.close();
 			} else if (e.state() == IdleState.WRITER_IDLE) {
-
+				Log.d("WRITER_IDLE");
 			}
 		}
 	}

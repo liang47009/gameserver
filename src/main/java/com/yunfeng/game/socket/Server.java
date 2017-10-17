@@ -11,8 +11,8 @@ import com.yunfeng.game.dispatcher.DispatcherManager;
 public class Server {
 
 	public void startUp(final String host, final int port) {
-		System.setProperty("io.netty.noPreferDirect", "false");
-		System.setProperty("io.netty.noUnsafe", "false");
+		System.setProperty("io.netty.noPreferDirect", "true");
+		System.setProperty("io.netty.noUnsafe", "true");
 
 		// AppUtils.init();
 		DispatcherManager.init();
