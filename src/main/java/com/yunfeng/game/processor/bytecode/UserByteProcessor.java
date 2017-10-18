@@ -1,7 +1,8 @@
-package com.yunfeng.game.processor;
+package com.yunfeng.game.processor.bytecode;
 
 import io.netty.channel.ChannelHandlerContext;
 
+import com.yunfeng.game.processor.IByteProcessor;
 import com.yunfeng.game.transfer.DataTransfer;
 import com.yunfeng.game.util.Log;
 

@@ -1,8 +1,9 @@
-package com.yunfeng.game.processor;
+package com.yunfeng.game.processor.httpcode;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
 
+import com.yunfeng.game.processor.IHttpProcessor;
 import com.yunfeng.game.util.HttpUtils;
 
 public class GameVersionProcessor implements IHttpProcessor {

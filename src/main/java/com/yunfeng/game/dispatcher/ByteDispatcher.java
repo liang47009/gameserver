@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.yunfeng.game.processor.IByteProcessor;
-import com.yunfeng.game.processor.UserByteProcessor;
+import com.yunfeng.game.processor.bytecode.UserByteProcessor;
 import com.yunfeng.game.transfer.DataTransfer;
 import com.yunfeng.game.util.Log;
 

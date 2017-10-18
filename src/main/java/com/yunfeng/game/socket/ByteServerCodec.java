@@ -10,7 +10,6 @@ import io.netty.handler.codec.MessageToMessageEncoder;
 import java.util.List;
 
 import com.yunfeng.game.transfer.DataTransfer;
-import com.yunfeng.game.util.Log;
 
 public final class ByteServerCodec
 		extends

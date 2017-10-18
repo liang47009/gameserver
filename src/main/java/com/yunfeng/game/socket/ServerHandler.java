@@ -1,5 +1,7 @@
 package com.yunfeng.game.socket;
 
+import java.io.IOException;
+
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.Attribute;
@@ -9,6 +11,12 @@ import com.yunfeng.game.dispatcher.DispatcherManager;
 import com.yunfeng.game.util.Log;
 
 public class ServerHandler extends ChannelInboundHandlerAdapter {
+
+	@Override
+	public void userEventTriggered(ChannelHandlerContext ctx, Object evt)
+			throws Exception {
+		Log.d("userEventTriggered: " + ctx.channel().id());
+	}
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -37,8 +45,12 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
 			throws Exception {
-		Log.e("exceptionCaught", cause);
-		cause.printStackTrace();
+		if (cause instanceof IOException) {
+			Log.e("exceptionCaught" + cause.getMessage());
+		} else {
+			Log.e("exceptionCaught", cause);
+			cause.printStackTrace();
+		}
 	}
 
 	@Override

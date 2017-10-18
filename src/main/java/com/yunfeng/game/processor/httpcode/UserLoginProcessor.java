@@ -1,4 +1,4 @@
-package com.yunfeng.game.processor;
+package com.yunfeng.game.processor.httpcode;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
@@ -8,6 +8,7 @@ import java.net.InetSocketAddress;
 import net.sf.json.JSONObject;
 
 import com.yunfeng.game.entity.User;
+import com.yunfeng.game.processor.IHttpProcessor;
 import com.yunfeng.game.util.HttpUtils;
 
 public class UserLoginProcessor implements IHttpProcessor {

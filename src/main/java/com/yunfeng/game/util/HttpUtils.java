@@ -41,9 +41,10 @@ public class HttpUtils {
 
 		if (ETag == null) {
 			ETag = "";
+		} else {
+			response.headers().set("ETag", ETag);
 		}
 
-		response.headers().set("ETag", ETag);
 		response.headers().set(HttpHeaderNames.CONTENT_TYPE,
 				"application/json; charset=utf-8");
 		response.headers().set(HttpHeaderNames.CONTENT_LENGTH,
@@ -56,8 +57,7 @@ public class HttpUtils {
 				"X-Requested-With");
 		response.headers().set(HttpHeaderNames.ACCESS_CONTROL_ALLOW_METHODS,
 				"PUT,POST,GET,DELETE,OPTIONS");
-		ctx.write(response);
-		ctx.flush();
+		ctx.writeAndFlush(response);
 	}
 
 }
