@@ -19,13 +19,14 @@ public class DispatcherManager {
 	}
 
 	public static boolean dipatch(ChannelHandlerContext ctx, Object msg) {
+		boolean successed = false;
 		for (IDispatcher dispatch : dispatchers) {
-			boolean b = dispatch.dipatch(ctx, msg);
-			if (b) {
-				return b;
+			if (dispatch.dipatch(ctx, msg)) {
+				successed = true;
+				break;
 			}
 		}
-		return false;
+		return successed;
 	}
 
 }

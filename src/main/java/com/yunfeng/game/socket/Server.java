@@ -38,12 +38,12 @@ public class Server {
 			b.group(bossGroup, workerGroup)
 					.channel(NioServerSocketChannel.class)
 					.childHandler(serverInitializer);
-			b.option(ChannelOption.TCP_NODELAY, false);
+			b.option(ChannelOption.SO_KEEPALIVE, true);
+			b.option(ChannelOption.SO_BACKLOG, 128);
 			b.bind(host, port).sync().channel().closeFuture().sync();
 		} finally {
 			bossGroup.shutdownGracefully();
 			workerGroup.shutdownGracefully();
 		}
 	}
-
 }

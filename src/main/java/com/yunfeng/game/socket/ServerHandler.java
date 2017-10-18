@@ -2,8 +2,6 @@ package com.yunfeng.game.socket;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.timeout.ReadTimeoutException;
-import io.netty.handler.timeout.WriteTimeoutException;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 
@@ -39,17 +37,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
 			throws Exception {
-		// super.exceptionCaught(ctx, cause);
-		// System.err.println("exceptionCaught");
-		if (cause instanceof ReadTimeoutException) {
-			Log.e("ReadTimeoutException");
-		} else if (cause instanceof WriteTimeoutException) {
-			Log.e("WriteTimeoutException");
-		} else {
-			Log.e("exceptionCaught: " + cause.getMessage());
-		}
-
-		ctx.close();
+		Log.e("exceptionCaught", cause);
+		cause.printStackTrace();
 	}
 
 	@Override

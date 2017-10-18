@@ -17,7 +17,8 @@ import io.netty.handler.logging.LoggingHandler;
 public class Client {
 
 	public static void main(String[] args) throws Exception {
-		String host = "::1";
+//		String host = "::1";
+		String host = "localhost";
 		int port = 9000;
 		new Client().start(host, port);
 		// for (int i = 0; i < 5; i++) {

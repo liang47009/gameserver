@@ -9,7 +9,7 @@ import com.yunfeng.game.socket.Server;
 public class App {
 	public static void main(String[] args) throws Exception {
 		Server server = new Server();
-		server.startUp("::1", 9000);
+		server.startUp("localhost", 9000);
 	}
 }
 // 2017-10-09T05:56:42.688805Z 1 [Note] A temporary password is generated for
