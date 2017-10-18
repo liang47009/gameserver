@@ -54,11 +54,14 @@ public class UriDispatcher implements IDispatcher {
 			}
 			processable = true;
 		} else if (msg instanceof LastHttpContent) {
-			DefaultFullHttpResponse response = new DefaultFullHttpResponse(
-					HttpVersion.HTTP_1_1, HttpResponseStatus.NOT_FOUND);
-			ctx.writeAndFlush(response);
-			ctx.close();
-			processable = true;
+			LastHttpContent request = (LastHttpContent) msg;
+			if (request.content().capacity() == 0) {
+				DefaultFullHttpResponse response = new DefaultFullHttpResponse(
+						HttpVersion.HTTP_1_1, HttpResponseStatus.NOT_FOUND);
+				ctx.writeAndFlush(response);
+				ctx.close();
+				processable = true;
+			}
 		}
 		return processable;
 	}
