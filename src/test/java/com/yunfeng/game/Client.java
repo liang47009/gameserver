@@ -1,8 +1,5 @@
 package com.yunfeng.game;
 
-import com.yunfeng.game.socket.ByteDecoder;
-import com.yunfeng.game.socket.ByteEncoder;
-
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -14,11 +11,13 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
+import com.yunfeng.game.socket.ByteServerCodec;
+
 public class Client {
 
 	public static void main(String[] args) throws Exception {
-//		String host = "::1";
-		String host = "localhost";
+		// String host = "::1";
+		String host = "172.19.34.237";
 		int port = 9000;
 		new Client().start(host, port);
 		// for (int i = 0; i < 5; i++) {
@@ -52,8 +51,7 @@ public class Client {
 				// Integer.MAX_VALUE, 0, 4, 0, 4));
 				// pipe.addLast("frameEncoder", new LengthFieldPrepender(4));
 				pipe.addLast("logging", new LoggingHandler(LogLevel.DEBUG));
-				pipe.addLast("decoder", new ByteDecoder());
-				pipe.addLast("encoder", new ByteEncoder());
+				pipe.addLast("bytecodec", new ByteServerCodec());
 				pipe.addLast("handler", new ClientHandler());
 			}
 		});
