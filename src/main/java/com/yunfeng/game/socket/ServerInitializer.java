@@ -3,11 +3,15 @@ package com.yunfeng.game.socket;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.Delimiters;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
 public class ServerInitializer extends ChannelInitializer<SocketChannel> {
+
+	private ServerHandler handler = new ServerHandler();
 
 	@Override
 	public void initChannel(SocketChannel ch) throws Exception {
@@ -27,17 +31,17 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel> {
 		// On top of the SSL handler, add the text line codec.
 		// pipeline.addLast("ssl", new SslHandler(engine));
 
-		// pipeline.addLast("framer", new DelimiterBasedFrameDecoder(8192,
-		// Delimiters.lineDelimiter()));
+//		pipeline.addLast("framer", new DelimiterBasedFrameDecoder(8192,
+//				Delimiters.lineDelimiter()));
 		pipeline.addLast("logging", new LoggingHandler(LogLevel.DEBUG));
 		// pipeline.addLast("idleStateHandler", new IdleStateHandler(5, 3, 0));
 		// pipeline.addLast("readTimeoutHandler", new ReadTimeoutHandler(30));
 		// pipeline.addLast("writeTimeoutHandler", new WriteTimeoutHandler(30));
 		// pipeline.addLast("idleHandler", new IdleHandler());
 		pipeline.addLast("bytecodec", new ByteServerCodec());
-		pipeline.addLast("httpcodec", new HttpServerCodec());
+//		pipeline.addLast("httpcodec", new HttpServerCodec());
 		// and then business logic.
-		pipeline.addLast("handler", new ServerHandler());
+		pipeline.addLast("handler", handler);
 	}
 
 }

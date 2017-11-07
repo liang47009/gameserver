@@ -1,5 +1,8 @@
 package com.yunfeng.game.util;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+
 import java.util.Random;
 
 import org.hibernate.SessionFactory;
@@ -7,7 +10,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.yunfeng.game.transfer.DataTransfer;
-import com.yunfeng.game.transfer.StringData;
 
 public class AppUtils {
 
@@ -35,12 +37,12 @@ public class AppUtils {
 		random.nextBytes(arr);
 		dt.setMid((byte) 1);
 		dt.setPid(arr[1]);
-		StringData data = new StringData();
+		ByteBuf data = Unpooled.buffer();
 		dt.setData(data);
 		String msg = "hello world!@!";
-		data.setMsg(msg);
-		data.setLength(msg.getBytes().length);
-		int len = 4 + 1 + 1 + data.getLength();
+		data.writeBytes(msg.getBytes());
+		data.writeInt(msg.getBytes().length);
+		int len = 4 + 1 + 1 + data.readableBytes();
 		dt.setLen(len);
 	}
 
