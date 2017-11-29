@@ -1,5 +1,7 @@
 package com.yunfeng.game;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -35,9 +37,14 @@ public class ClientHandler extends SimpleChannelInboundHandler<DataTransfer> {
 			public void run() {
 				Channel channel = ctx.channel();
 				if (channel.isActive()) {
-					DataTransfer dt = new DataTransfer();
-					AppUtils.random(dt);
-					channel.writeAndFlush(dt);
+					// DataTransfer dt = new DataTransfer();
+					// AppUtils.random(dt);
+					// channel.writeAndFlush(dt);
+					String msg = "config;172.19.34.237;5274";
+					ByteBuf buff = Unpooled.buffer(msg.length());
+					buff.writeBytes(msg.getBytes());
+					channel.writeAndFlush(buff);
+					this.cancel();
 				} else {
 					this.cancel();
 				}

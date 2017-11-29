@@ -31,15 +31,16 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel> {
 		// On top of the SSL handler, add the text line codec.
 		// pipeline.addLast("ssl", new SslHandler(engine));
 
-//		pipeline.addLast("framer", new DelimiterBasedFrameDecoder(8192,
-//				Delimiters.lineDelimiter()));
+		// pipeline.addLast("framer", new DelimiterBasedFrameDecoder(8192,
+		// Delimiters.lineDelimiter()));
 		pipeline.addLast("logging", new LoggingHandler(LogLevel.DEBUG));
 		// pipeline.addLast("idleStateHandler", new IdleStateHandler(5, 3, 0));
 		// pipeline.addLast("readTimeoutHandler", new ReadTimeoutHandler(30));
 		// pipeline.addLast("writeTimeoutHandler", new WriteTimeoutHandler(30));
 		// pipeline.addLast("idleHandler", new IdleHandler());
-		pipeline.addLast("bytecodec", new ByteServerCodec());
-//		pipeline.addLast("httpcodec", new HttpServerCodec());
+		// pipeline.addLast("bytecodec", new ByteServerCodec());
+		pipeline.addLast("bytecodec", new ByteCodec());
+		// pipeline.addLast("httpcodec", new HttpServerCodec());
 		// and then business logic.
 		pipeline.addLast("handler", handler);
 	}

@@ -1,5 +1,6 @@
 package com.yunfeng.game.dispatcher;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.util.HashMap;
@@ -39,6 +40,19 @@ public class ByteDispatcher implements IDispatcher {
 				processor.process(ctx, request);
 			}
 			processable = true;
+		} else if (msg instanceof ByteBuf) {
+			String log = "ByteBuf msg: ";
+			ByteBuf buf = (ByteBuf) msg;
+			byte[] arr = buf.array();
+			for (int i = 0; i < arr.length; i++) {
+				int val = arr[i];
+				String hex = Integer.toHexString(val & 0xFF);
+				if (hex.length() == 1) {
+					hex = "0" + hex;
+				}
+				log += hex;
+			}
+			Log.d(log);
 		}
 		return processable;
 	}

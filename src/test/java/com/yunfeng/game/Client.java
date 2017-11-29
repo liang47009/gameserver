@@ -11,14 +11,14 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
-import com.yunfeng.game.socket.ByteServerCodec;
+import com.yunfeng.game.socket.ByteCodec;
 
 public class Client {
 
 	public static void main(String[] args) throws Exception {
 		// String host = "::1";
-		String host = "172.19.34.237";
-		int port = 9000;
+		String host = "172.17.28.42";
+		int port = 4999;
 		new Client().start(host, port);
 		// for (int i = 0; i < 5; i++) {
 		// new Thread(new Runnable() {
@@ -51,7 +51,7 @@ public class Client {
 				// Integer.MAX_VALUE, 0, 4, 0, 4));
 				// pipe.addLast("frameEncoder", new LengthFieldPrepender(4));
 				pipe.addLast("logging", new LoggingHandler(LogLevel.DEBUG));
-				pipe.addLast("bytecodec", new ByteServerCodec());
+				pipe.addLast("bytecodec", new ByteCodec());
 				pipe.addLast("handler", new ClientHandler());
 			}
 		});
