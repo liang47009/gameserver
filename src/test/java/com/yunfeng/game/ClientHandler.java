@@ -6,6 +6,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,6 +27,8 @@ public class ClientHandler extends SimpleChannelInboundHandler<DataTransfer> {
 
 	}
 
+	Random r = new Random();
+
 	@Override
 	public void channelActive(final ChannelHandlerContext ctx) throws Exception {
 		Log.d("channelActive: " + ctx.channel().id());
@@ -40,11 +43,11 @@ public class ClientHandler extends SimpleChannelInboundHandler<DataTransfer> {
 					// DataTransfer dt = new DataTransfer();
 					// AppUtils.random(dt);
 					// channel.writeAndFlush(dt);
-					String msg = "config;172.19.34.237;5274";
+					int i = r.nextInt();
+					String msg = "config;172.19.34.237;5274" + ", Random:" + i;
 					ByteBuf buff = Unpooled.buffer(msg.length());
 					buff.writeBytes(msg.getBytes());
 					channel.writeAndFlush(buff);
-					this.cancel();
 				} else {
 					this.cancel();
 				}

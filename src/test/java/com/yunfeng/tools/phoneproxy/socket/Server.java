@@ -1,4 +1,8 @@
-package com.yunfeng.game.socket;
+package com.yunfeng.tools.phoneproxy.socket;
+
+import java.security.cert.CertificateException;
+
+import javax.net.ssl.SSLException;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
@@ -6,40 +10,41 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-import com.yunfeng.game.dispatcher.DispatcherManager;
-
 public class Server {
 
-	public void startUp(final String host, final int port) {
+	public static void main(String[] args) {
+		new Server().startup("172.19.34.237", 8888);
+	}
+
+	public void startup(final String host, final int port) {
 		System.setProperty("io.netty.noPreferDirect", "true");
 		System.setProperty("io.netty.noUnsafe", "true");
+		System.setProperty("javax.net.debug", "SSL,handshake,data,trustmanager");
 
-		// AppUtils.init();
-		DispatcherManager.init();
-
+		System.err.println(System.getProperty("java.library.path"));
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				try {
 					new Server().run(host, port);
-				} catch (Exception e) {
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (SSLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (CertificateException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		}).start();
 	}
 
-	public void run(String host, int port) throws Exception {
+	private void run(String host, int port) throws InterruptedException,
+			SSLException, CertificateException {
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		ServerInitializer serverInitializer = new ServerInitializer();
-		// SelfSignedCertificate ssc = new SelfSignedCertificate();
-		// SslContext sslCtx = SslContextBuilder.forServer(ssc.certificate(),
-		// ssc.privateKey())
-		// .build();
-		// final SslContext sslCtx = SslContextBuilder.forClient()
-		// .trustManager(InsecureTrustManagerFactory.INSTANCE).build();
-		// HttpInitializer serverInitializer = new HttpInitializer(sslCtx);
 		try {
 			ServerBootstrap b = new ServerBootstrap();
 			b.group(bossGroup, workerGroup)
