@@ -1,5 +1,6 @@
 package com.yunfeng.game.processor.httpcode;
 
+import com.yunfeng.game.util.Log;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -15,49 +16,33 @@ import com.yunfeng.game.processor.IHttpProcessor;
 
 public class FaviconProcessor implements IHttpProcessor {
 
-	private InputStream in = this.getClass().getClassLoader()
-			.getResourceAsStream("favicon.ico");
+    private byte[] b = null;
 
-	public FaviconProcessor() {
-		try {
-			byte[] b = new byte[in.available()];
-			in.read(b);
-			// src.writeBytes(b);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// File file = new File("favicon.ico");
-		// if (file.exists()) {
-		// FileInputStream fis = null;
-		// try {
-		// fis = new FileInputStream(file);
-		// byte[] src = new byte[(int) file.length()];
-		// fis.read(src);
-		// } catch (IOException e) {
-		// Log.e("FaviconProcessor", e);
-		// } finally {
-		// if (fis != null) {
-		// try {
-		// fis.close();
-		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// }
-		// }
-		// }
-	}
+    public FaviconProcessor() {
+        try {
+            InputStream in = this.getClass().getClassLoader()
+                    .getResourceAsStream("favicon.ico");
+            b = new byte[in.available()];
+            int len = in.read(b);
+            if (len == -1) {
+                Log.e("read ico error!");
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
-	@Override
-	public void process(ChannelHandlerContext ctx, HttpRequest request,
-			String param) {
-		// TODO Auto-generated method stub
-		DefaultFullHttpResponse response = new DefaultFullHttpResponse(
-				HttpVersion.HTTP_1_1, HttpResponseStatus.NOT_FOUND);
-		ByteBuf src = Unpooled.buffer();
-		response.content().writeBytes(src.array());
-		ctx.writeAndFlush(response);
-		ctx.close();
-	}
+    @Override
+    public void process(ChannelHandlerContext ctx, HttpRequest request,
+                        String param) {
+        // TODO Auto-generated method stub
+        DefaultFullHttpResponse response = new DefaultFullHttpResponse(
+                HttpVersion.HTTP_1_1, HttpResponseStatus.NOT_FOUND);
+        ByteBuf src = Unpooled.buffer();
+        src.writeBytes(b);
+        response.content().writeBytes(src);
+        ctx.writeAndFlush(response);
+        ctx.close();
+    }
 }
