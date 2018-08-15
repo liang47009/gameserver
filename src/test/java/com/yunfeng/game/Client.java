@@ -11,7 +11,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
-import com.yunfeng.game.socket.ByteCodec;
+import com.yunfeng.tools.phoneproxy.socket.ByteCodec;
 
 public class Client {
 

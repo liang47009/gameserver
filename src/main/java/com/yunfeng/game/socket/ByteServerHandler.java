@@ -10,7 +10,7 @@ import com.yunfeng.game.dispatcher.DispatcherManager;
 import com.yunfeng.game.util.Log;
 
 @Sharable
-public class ServerHandler extends ChannelInboundHandlerAdapter {
+public class ByteServerHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void userEventTriggered(ChannelHandlerContext ctx, Object evt)
