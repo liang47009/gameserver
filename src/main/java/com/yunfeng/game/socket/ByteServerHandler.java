@@ -43,7 +43,7 @@ public class ByteServerHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg)
-			throws Exception {
+            throws Exception {
 		DispatcherManager.dipatch(ctx, msg);
 	}
 

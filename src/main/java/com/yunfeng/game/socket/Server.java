@@ -8,29 +8,14 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-public class Server {
+public abstract class Server {
 
     private EventLoopGroup bossGroup = new NioEventLoopGroup();
     private EventLoopGroup workerGroup = new NioEventLoopGroup();
 
-    private ChannelHandler serverHandler = new ByteServerHandler();
+    private ChannelInitializer serverInitializer;
 
-    private ChannelInitializer serverInitializer = new ByteServerInitializer(serverHandler);
-
-    public void startUp(final String host, final int port) {
-        System.setProperty("io.netty.noPreferDirect", "true");
-        System.setProperty("io.netty.noUnsafe", "true");
-
-        new Thread(() -> {
-            try {
-                new Server().run(host, port);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
-
-    public void run(String host, int port) throws Exception {
+    private void run(String host, int port) throws Exception {
         ServerBootstrap b = new ServerBootstrap();
         b.group(bossGroup, workerGroup)
                 .channel(NioServerSocketChannel.class)
@@ -40,8 +25,29 @@ public class Server {
         b.bind(host, port).sync().channel().closeFuture().sync();
     }
 
+    public void startUp(final String host, final int port) {
+        System.setProperty("io.netty.noPreferDirect", "true");
+        System.setProperty("io.netty.noUnsafe", "true");
+
+        new Thread(() -> {
+            try {
+                run(host, port);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
     public void stop() {
         bossGroup.shutdownGracefully();
         workerGroup.shutdownGracefully();
+    }
+
+    public ChannelInitializer getServerInitializer() {
+        return serverInitializer;
+    }
+
+    public void setServerInitializer(ChannelInitializer serverInitializer) {
+        this.serverInitializer = serverInitializer;
     }
 }

@@ -12,7 +12,6 @@ import io.netty.handler.ssl.util.SelfSignedCertificate;
 public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
 
     private SslContext sslCtx;
-    private boolean useSSL = false;
     private ChannelHandler mCustomHandler;
 
     public HttpServerInitializer(boolean useSSL, ChannelHandler coreHandler) {
@@ -24,7 +23,7 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
                 sslCtx = SslContextBuilder.forServer(ssc.certificate(),
                         ssc.privateKey()).build();
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
         } else {
             sslCtx = null;

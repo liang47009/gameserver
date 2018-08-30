@@ -5,6 +5,7 @@ import com.yunfeng.game.dispatcher.DispatcherManager;
 import com.yunfeng.game.dispatcher.UriDispatcher;
 import com.yunfeng.game.processor.bytecode.UserByteProcessor;
 import com.yunfeng.game.processor.httpcode.*;
+import com.yunfeng.game.socket.HttpServer;
 import com.yunfeng.game.socket.Server;
 
 /**
@@ -28,8 +29,8 @@ public class App {
         byteDispatcher.register(USER_PROCESSOR_MODULEID, new UserByteProcessor());
         DispatcherManager.registerDispatcher(byteDispatcher);
 
-        Server server = new Server();
-        server.startUp("172.19.34.237", 8888);
+        Server server = new HttpServer();
+        server.startUp("172.19.34.25", 8888);
     }
 }
 // 2017-10-09T05:56:42.688805Z 1 [Note] A temporary password is generated for

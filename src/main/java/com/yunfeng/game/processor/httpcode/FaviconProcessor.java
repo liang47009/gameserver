@@ -3,6 +3,7 @@ package com.yunfeng.game.processor.httpcode;
 import com.yunfeng.game.util.Log;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.HttpRequest;
@@ -34,11 +35,9 @@ public class FaviconProcessor implements IHttpProcessor {
     }
 
     @Override
-    public void process(ChannelHandlerContext ctx, HttpRequest request,
-                        String param) {
+    public void process(ChannelHandlerContext ctx, HttpRequest request, String param) {
         // TODO Auto-generated method stub
-        DefaultFullHttpResponse response = new DefaultFullHttpResponse(
-                HttpVersion.HTTP_1_1, HttpResponseStatus.NOT_FOUND);
+        DefaultFullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
         ByteBuf src = Unpooled.buffer();
         src.writeBytes(b);
         response.content().writeBytes(src);
