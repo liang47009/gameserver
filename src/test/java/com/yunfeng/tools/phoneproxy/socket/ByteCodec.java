@@ -10,32 +10,32 @@ import io.netty.handler.codec.MessageToMessageEncoder;
 import java.util.List;
 
 public class ByteCodec
-		extends
-		CombinedChannelDuplexHandler<MessageToMessageDecoder<ByteBuf>, MessageToMessageEncoder<ByteBuf>> {
+        extends
+        CombinedChannelDuplexHandler<MessageToMessageDecoder<ByteBuf>, MessageToMessageEncoder<ByteBuf>> {
 
-	public ByteCodec() {
-		init(new ByteDecoder(), new ByteEncoder());
-	}
+    public ByteCodec() {
+        init(new ByteDecoder(), new ByteEncoder());
+    }
 
-	private final class ByteEncoder extends MessageToMessageEncoder<ByteBuf> {
+    private final class ByteEncoder extends MessageToMessageEncoder<ByteBuf> {
 
-		@Override
-		protected void encode(ChannelHandlerContext ctx, ByteBuf msg,
-				List<Object> out) throws Exception {
-			ByteBuf buff = Unpooled.buffer(msg.readableBytes());
-			msg.readBytes(buff);
-			out.add(buff);
-		}
-	}
+        @Override
+        protected void encode(ChannelHandlerContext ctx, ByteBuf msg,
+                              List<Object> out) throws Exception {
+            ByteBuf buff = Unpooled.buffer(msg.readableBytes());
+            msg.readBytes(buff);
+            out.add(buff);
+        }
+    }
 
-	private final class ByteDecoder extends MessageToMessageDecoder<ByteBuf> {
+    private final class ByteDecoder extends MessageToMessageDecoder<ByteBuf> {
 
-		@Override
-		protected void decode(ChannelHandlerContext ctx, ByteBuf msg,
-				List<Object> out) throws Exception {
-			ByteBuf buff = Unpooled.buffer(msg.readableBytes());
-			msg.readBytes(buff);
-			out.add(buff);
-		}
-	}
+        @Override
+        protected void decode(ChannelHandlerContext ctx, ByteBuf msg,
+                              List<Object> out) throws Exception {
+            ByteBuf buff = Unpooled.buffer(msg.readableBytes());
+            msg.readBytes(buff);
+            out.add(buff);
+        }
+    }
 }

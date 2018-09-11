@@ -33,35 +33,35 @@ import io.netty.handler.ssl.util.SelfSignedCertificate;
  */
 public final class HttpHelloWorldServer {
 
-	private static final boolean SSL = false;
+    private static final boolean SSL = false;
 
-	public static void main(String[] args) throws Exception {
-		// Configure SSL.
-		final SslContext sslCtx;
-		if (SSL) {
-			SelfSignedCertificate ssc = new SelfSignedCertificate();
-			sslCtx = SslContextBuilder.forServer(ssc.certificate(),
-					ssc.privateKey()).build();
-		} else {
-			sslCtx = null;
-		}
+    public static void main(String[] args) throws Exception {
+        // Configure SSL.
+        final SslContext sslCtx;
+        if (SSL) {
+            SelfSignedCertificate ssc = new SelfSignedCertificate();
+            sslCtx = SslContextBuilder.forServer(ssc.certificate(),
+                    ssc.privateKey()).build();
+        } else {
+            sslCtx = null;
+        }
 
-		// Configure the server.
-		EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-		EventLoopGroup workerGroup = new NioEventLoopGroup();
-		try {
-			ServerBootstrap b = new ServerBootstrap();
-			b.option(ChannelOption.SO_BACKLOG, 1024);
-			b.group(bossGroup, workerGroup)
-					.channel(NioServerSocketChannel.class)
-					.handler(new LoggingHandler(LogLevel.INFO))
-					.childHandler(new HttpHelloWorldServerInitializer(sslCtx));
+        // Configure the server.
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        try {
+            ServerBootstrap b = new ServerBootstrap();
+            b.option(ChannelOption.SO_BACKLOG, 1024);
+            b.group(bossGroup, workerGroup)
+                    .channel(NioServerSocketChannel.class)
+                    .handler(new LoggingHandler(LogLevel.INFO))
+                    .childHandler(new HttpHelloWorldServerInitializer(sslCtx));
 
-			Channel ch = b.bind("172.19.34.237", 8888).sync().channel();
-			ch.closeFuture().sync();
-		} finally {
-			bossGroup.shutdownGracefully();
-			workerGroup.shutdownGracefully();
-		}
-	}
+            Channel ch = b.bind("172.19.34.237", 8888).sync().channel();
+            ch.closeFuture().sync();
+        } finally {
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
+        }
+    }
 }

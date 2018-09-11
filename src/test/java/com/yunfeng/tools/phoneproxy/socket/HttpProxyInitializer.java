@@ -24,17 +24,17 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 
 public class HttpProxyInitializer extends ChannelInitializer<SocketChannel> {
 
-	private Channel ch;
+    private Channel ch;
 
-	public HttpProxyInitializer(Channel ch) {
-		this.ch = ch;
-	}
+    public HttpProxyInitializer(Channel ch) {
+        this.ch = ch;
+    }
 
-	@Override
-	public void initChannel(SocketChannel ch) {
-		ChannelPipeline p = ch.pipeline();
-		p.addLast(new HttpClientCodec());
-		p.addLast(new HttpObjectAggregator(6553600));
-		p.addLast(new HttpProxyHandler(this.ch));
-	}
+    @Override
+    public void initChannel(SocketChannel ch) {
+        ChannelPipeline p = ch.pipeline();
+        p.addLast(new HttpClientCodec());
+        p.addLast(new HttpObjectAggregator(6553600));
+        p.addLast(new HttpProxyHandler(this.ch));
+    }
 }

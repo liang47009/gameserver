@@ -16,13 +16,7 @@
 package com.yunfeng.game.proxy;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.socks.SocksCmdRequest;
 import io.netty.handler.codec.socks.SocksCmdResponse;
@@ -40,26 +34,26 @@ public final class SocksServerConnectHandler extends SimpleChannelInboundHandler
     public void channelRead0(final ChannelHandlerContext ctx, final SocksCmdRequest request) throws Exception {
         Promise<Channel> promise = ctx.executor().newPromise();
         promise.addListener(
-            new GenericFutureListener<Future<Channel>>() {
-            @Override
-            public void operationComplete(final Future<Channel> future) throws Exception {
-                final Channel outboundChannel = future.getNow();
-                if (future.isSuccess()) {
-                    ctx.channel().writeAndFlush(new SocksCmdResponse(SocksCmdStatus.SUCCESS, request.addressType()))
-                            .addListener(new ChannelFutureListener() {
-                                @Override
-                                public void operationComplete(ChannelFuture channelFuture) {
-                                    ctx.pipeline().remove(SocksServerConnectHandler.this);
-                                    outboundChannel.pipeline().addLast(new RelayHandler(ctx.channel()));
-                                    ctx.pipeline().addLast(new RelayHandler(outboundChannel));
-                                }
-                            });
-                } else {
-                    ctx.channel().writeAndFlush(new SocksCmdResponse(SocksCmdStatus.FAILURE, request.addressType()));
-                    SocksServerUtils.closeOnFlush(ctx.channel());
-                }
-            }
-        });
+                new GenericFutureListener<Future<Channel>>() {
+                    @Override
+                    public void operationComplete(final Future<Channel> future) throws Exception {
+                        final Channel outboundChannel = future.getNow();
+                        if (future.isSuccess()) {
+                            ctx.channel().writeAndFlush(new SocksCmdResponse(SocksCmdStatus.SUCCESS, request.addressType()))
+                                    .addListener(new ChannelFutureListener() {
+                                        @Override
+                                        public void operationComplete(ChannelFuture channelFuture) {
+                                            ctx.pipeline().remove(SocksServerConnectHandler.this);
+                                            outboundChannel.pipeline().addLast(new RelayHandler(ctx.channel()));
+                                            ctx.pipeline().addLast(new RelayHandler(outboundChannel));
+                                        }
+                                    });
+                        } else {
+                            ctx.channel().writeAndFlush(new SocksCmdResponse(SocksCmdStatus.FAILURE, request.addressType()));
+                            SocksServerUtils.closeOnFlush(ctx.channel());
+                        }
+                    }
+                });
 
         final Channel inboundChannel = ctx.channel();
         b.group(inboundChannel.eventLoop())

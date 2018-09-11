@@ -1,9 +1,9 @@
 package com.yunfeng.game.processor.httpcode;
 
+import com.yunfeng.game.processor.IHttpProcessor;
 import com.yunfeng.game.util.Log;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.HttpRequest;
@@ -12,8 +12,6 @@ import io.netty.handler.codec.http.HttpVersion;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import com.yunfeng.game.processor.IHttpProcessor;
 
 public class FaviconProcessor implements IHttpProcessor {
 

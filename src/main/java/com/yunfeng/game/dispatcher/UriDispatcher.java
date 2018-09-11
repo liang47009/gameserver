@@ -3,7 +3,8 @@ package com.yunfeng.game.dispatcher;
 import com.yunfeng.game.processor.IHttpProcessor;
 import com.yunfeng.game.util.Log;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.http.HttpRequest;
+import io.netty.handler.codec.http.LastHttpContent;
 
 import java.util.HashMap;
 import java.util.Map;
