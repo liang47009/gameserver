@@ -1,5 +1,6 @@
 package com.yunfeng.game.socket;
 
+import com.yunfeng.game.util.Threads;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -14,6 +15,8 @@ public abstract class Server {
 
     private ChannelInitializer serverInitializer;
 
+    protected abstract boolean init();
+
     private void run(String host, int port) throws Exception {
         ServerBootstrap b = new ServerBootstrap();
         b.group(bossGroup, workerGroup)
@@ -27,14 +30,15 @@ public abstract class Server {
     public void startUp(final String host, final int port) {
         System.setProperty("io.netty.noPreferDirect", "true");
         System.setProperty("io.netty.noUnsafe", "true");
-
-        new Thread(() -> {
-            try {
-                run(host, port);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
+        if (init()) {
+            Threads.submit(() -> {
+                try {
+                    run(host, port);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
 
     public void stop() {

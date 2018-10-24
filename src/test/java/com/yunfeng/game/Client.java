@@ -12,8 +12,8 @@ public class Client {
 
     public static void main(String[] args) throws Exception {
         // String host = "::1";
-        String host = "172.17.28.42";
-        int port = 4999;
+        String host = "172.19.34.25";
+        int port = 8888;
         new Client().start(host, port);
         // for (int i = 0; i < 5; i++) {
         // new Thread(new Runnable() {

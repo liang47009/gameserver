@@ -1,6 +1,7 @@
 package com.yunfeng.game;
 
 import com.yunfeng.game.transfer.DataTransfer;
+import com.yunfeng.game.util.AppUtils;
 import com.yunfeng.game.util.Log;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -38,12 +39,13 @@ public class ClientHandler extends SimpleChannelInboundHandler<DataTransfer> {
             public void run() {
                 Channel channel = ctx.channel();
                 if (channel.isActive()) {
-                    // DataTransfer dt = new DataTransfer();
-                    // AppUtils.random(dt);
-                    // channel.writeAndFlush(dt);
+//                     DataTransfer dt = new DataTransfer();
+//                     AppUtils.random(dt);
+//                     channel.writeAndFlush(dt);
                     int i = r.nextInt();
                     String msg = "config;172.19.34.237;5274" + ", Random:" + i;
                     ByteBuf buff = Unpooled.buffer(msg.length());
+                    buff.writeInt(msg.length());
                     buff.writeBytes(msg.getBytes());
                     channel.writeAndFlush(buff);
                 } else {

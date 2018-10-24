@@ -10,18 +10,18 @@ import io.netty.handler.codec.MessageToMessageEncoder;
 
 import java.util.List;
 
-public final class ByteServerCodec extends CombinedChannelDuplexHandler<MessageToMessageDecoder<ByteBuf>, MessageToMessageEncoder<DataTransfer>> {
+public final class ByteServerCodec extends CombinedChannelDuplexHandler<MessageToMessageDecoder<ByteBuf>, MessageToMessageEncoder<ByteBuf>> {
 
     public ByteServerCodec() {
         init(new ByteDecoder(), new ByteEncoder());
     }
 
-    private final class ByteEncoder extends
-            MessageToMessageEncoder<DataTransfer> {
+    private final class ByteEncoder extends MessageToMessageEncoder<ByteBuf> {
 
         @Override
-        protected void encode(ChannelHandlerContext ctx, DataTransfer msg, List<Object> out) {
-            out.add(msg.toByteBuff());
+        protected void encode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) {
+            ByteBuf buff = Unpooled.wrappedBuffer(msg);
+            out.add(buff);
         }
 
     }

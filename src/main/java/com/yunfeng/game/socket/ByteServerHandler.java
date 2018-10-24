@@ -14,18 +14,18 @@ public class ByteServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt)
             throws Exception {
-        Log.d("userEventTriggered: " + ctx.channel().id());
+        Log.d("ByteServerHandler userEventTriggered: " + ctx.channel().id());
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        Log.d("channelActive: " + ctx.channel().id());
+        Log.d("ByteServerHandler channelActive: " + ctx.channel().id());
         DispatcherManager.channelActive(ctx);
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        Log.d("channelInactive: " + ctx.channel().id());
+        Log.d("ByteServerHandler channelInactive: " + ctx.channel().id());
         DispatcherManager.channelInactive(ctx);
     }
 
@@ -33,9 +33,9 @@ public class ByteServerHandler extends ChannelInboundHandlerAdapter {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
             throws Exception {
         if (cause instanceof IOException) {
-            Log.e("exceptionCaught" + cause.getMessage());
+            Log.e("ByteServerHandler exceptionCaught" + cause.getMessage());
         } else {
-            Log.e("exceptionCaught", cause);
+            Log.e("ByteServerHandler exceptionCaught", cause);
             cause.printStackTrace();
         }
     }

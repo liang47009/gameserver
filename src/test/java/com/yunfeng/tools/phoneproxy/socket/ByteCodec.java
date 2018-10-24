@@ -22,7 +22,7 @@ public class ByteCodec
         @Override
         protected void encode(ChannelHandlerContext ctx, ByteBuf msg,
                               List<Object> out) throws Exception {
-            ByteBuf buff = Unpooled.buffer(msg.readableBytes());
+            ByteBuf buff = Unpooled.wrappedBuffer(msg.array());
             msg.readBytes(buff);
             out.add(buff);
         }
@@ -33,7 +33,7 @@ public class ByteCodec
         @Override
         protected void decode(ChannelHandlerContext ctx, ByteBuf msg,
                               List<Object> out) throws Exception {
-            ByteBuf buff = Unpooled.buffer(msg.readableBytes());
+            ByteBuf buff = Unpooled.wrappedBuffer(msg.array());
             msg.readBytes(buff);
             out.add(buff);
         }
