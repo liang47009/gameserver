@@ -8,6 +8,6 @@ import com.yunfeng.game.socket.ByteServer;
 public class App {
 
     public static void main(String[] args) {
-        new ByteServer().startUp("172.19.34.25", 8888);
+        new ByteServer().startUp("localhost", 8888);
     }
 }

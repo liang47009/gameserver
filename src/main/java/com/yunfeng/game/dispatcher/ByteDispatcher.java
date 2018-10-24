@@ -26,8 +26,7 @@ public class ByteDispatcher implements IDispatcher {
             byte mid = request.getMid();
             IByteProcessor processor = processors.get(mid);
             if (processor == null) {
-                String log = "no processor found for: " + request.getMid();
-                Log.d(log);
+                Log.e("no processor found for: " + request.getMid());
             } else {
                 processor.process(ctx, request);
             }

@@ -12,26 +12,24 @@ import java.io.IOException;
 public class ByteServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
-    public void userEventTriggered(ChannelHandlerContext ctx, Object evt)
-            throws Exception {
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
         Log.d("ByteServerHandler userEventTriggered: " + ctx.channel().id());
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) {
         Log.d("ByteServerHandler channelActive: " + ctx.channel().id());
         DispatcherManager.channelActive(ctx);
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+    public void channelInactive(ChannelHandlerContext ctx) {
         Log.d("ByteServerHandler channelInactive: " + ctx.channel().id());
         DispatcherManager.channelInactive(ctx);
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
-            throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         if (cause instanceof IOException) {
             Log.e("ByteServerHandler exceptionCaught" + cause.getMessage());
         } else {
@@ -41,8 +39,7 @@ public class ByteServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg)
-            throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
         DispatcherManager.dipatch(ctx, msg);
     }
 
