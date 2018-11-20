@@ -1,6 +1,7 @@
 package com.yunfeng.game;
 
 import com.yunfeng.game.socket.ByteServer;
+import org.yaml.snakeyaml.Yaml;
 
 /**
  * Hello world!
@@ -8,6 +9,6 @@ import com.yunfeng.game.socket.ByteServer;
 public class App {
 
     public static void main(String[] args) {
-        new ByteServer().startUp("localhost", 8888);
+        new ByteServer().startUp("172.19.34.25", 8888);
     }
 }

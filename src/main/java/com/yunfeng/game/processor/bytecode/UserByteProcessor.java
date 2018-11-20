@@ -4,6 +4,15 @@ import com.yunfeng.game.processor.IByteProcessor;
 import com.yunfeng.game.transfer.DataTransfer;
 import io.netty.channel.ChannelHandlerContext;
 
+abstract class AbsByteProcessor implements IByteProcessor {
+
+    AbsByteProcessor() {
+
+    }
+
+    abstract byte getModuleId();
+}
+
 public class UserByteProcessor implements IByteProcessor {
 
     @Override
