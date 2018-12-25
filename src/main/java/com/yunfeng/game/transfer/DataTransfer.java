@@ -3,6 +3,7 @@ package com.yunfeng.game.transfer;
 import com.yunfeng.game.util.BufferWriter;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerContext;
 
 public class DataTransfer {
     private int len;
@@ -10,6 +11,8 @@ public class DataTransfer {
     private byte pid;
     private ByteBuf data;
     private IDataResponse response;
+
+    private ChannelHandlerContext channelHandlerContext;
 
     public int getLen() {
         return len;
@@ -84,4 +87,11 @@ public class DataTransfer {
         return temp;
     }
 
+    public ChannelHandlerContext getChannelHandlerContext() {
+        return channelHandlerContext;
+    }
+
+    public void setChannelHandlerContext(ChannelHandlerContext channelHandlerContext) {
+        this.channelHandlerContext = channelHandlerContext;
+    }
 }

@@ -4,18 +4,22 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
+@Component
 public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
 
     private SslContext sslCtx;
+
+    @Resource(name = "httpServerHandler")
     private ChannelHandler mCustomHandler;
 
-    public HttpServerInitializer(boolean useSSL, ChannelHandler coreHandler) {
-        this.mCustomHandler = coreHandler;
+    public void init(boolean useSSL) {
         // Configure SSL.
         if (useSSL) {
             try {

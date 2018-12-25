@@ -5,10 +5,12 @@ import com.yunfeng.game.util.Log;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.LastHttpContent;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class UriDispatcher implements IDispatcher {
 
     private Map<String, IHttpProcessor> processors = new HashMap<String, IHttpProcessor>();

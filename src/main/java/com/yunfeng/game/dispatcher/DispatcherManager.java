@@ -1,15 +1,12 @@
 package com.yunfeng.game.dispatcher;
 
+import com.yunfeng.game.util.Threads;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class DispatcherManager {
-
-    private static ExecutorService executor = Executors.newCachedThreadPool();
 
     private static List<IDispatcher> dispatchers = new ArrayList<>();
 
@@ -18,7 +15,7 @@ public class DispatcherManager {
     }
 
     public static void dipatch(final ChannelHandlerContext ctx, final Object msg) {
-        executor.execute(() -> {
+        Threads.execute(() -> {
             for (IDispatcher dispatch : dispatchers) {
                 if (dispatch.dipatch(ctx, msg)) {
                     break;

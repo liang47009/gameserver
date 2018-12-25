@@ -15,6 +15,7 @@ public class Log {
 
     private static LogLevel logLevel = LogLevel.ERROR;
     private static final Logger loggerDebug = Logger.getLogger("logDebug");
+    private static final Logger loggerInfo = Logger.getLogger("logInfo");
     private static final Logger loggerErr = Logger.getLogger("logError");
 
     public static void t(Object msg) {
@@ -43,7 +44,7 @@ public class Log {
             if (null == msg) {
                 msg = "null";
             }
-            loggerDebug.warn(msg.toString());
+            loggerInfo.info(msg.toString());
         }
     }
 
@@ -53,7 +54,7 @@ public class Log {
             if (null == msg) {
                 msg = "null";
             }
-            loggerDebug.debug(msg.toString());
+            loggerInfo.warn(msg.toString());
         }
     }
 

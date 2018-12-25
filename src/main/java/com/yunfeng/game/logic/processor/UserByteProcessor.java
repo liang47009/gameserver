@@ -1,22 +1,13 @@
-package com.yunfeng.game.processor.bytecode;
+package com.yunfeng.game.logic.processor;
 
 import com.yunfeng.game.processor.IByteProcessor;
 import com.yunfeng.game.transfer.DataTransfer;
 import io.netty.channel.ChannelHandlerContext;
 
-abstract class AbsByteProcessor implements IByteProcessor {
-
-    AbsByteProcessor() {
-
-    }
-
-    abstract byte getModuleId();
-}
-
-public class UserByteProcessor implements IByteProcessor {
+public class UserByteProcessor implements IByteProcessor<DataTransfer> {
 
     @Override
-    public void process(ChannelHandlerContext ctx, DataTransfer request) {
+    public void process(DataTransfer request) {
         // Log.e("UserByteProcessor: " + request);
         DataTransfer response = new DataTransfer();
         response.setMid((byte) 1);
@@ -26,7 +17,7 @@ public class UserByteProcessor implements IByteProcessor {
             buff.writeInt(msg.length());
             buff.writeBytes(msg.getBytes());
         });
-        ctx.writeAndFlush(response);
+        request.getChannelHandlerContext().writeAndFlush(response);
     }
 
 }

@@ -1,21 +1,19 @@
 package com.yunfeng.game.dispatcher;
 
-import com.yunfeng.game.processor.IByteProcessor;
+import com.yunfeng.game.processor.bytecode.ByteCodeModuleManager;
 import com.yunfeng.game.transfer.DataTransfer;
 import com.yunfeng.game.util.Log;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.annotation.Resource;
 
+@Component
 public class ByteDispatcher implements IDispatcher {
 
-    private Map<Byte, IByteProcessor> processors = new HashMap<>();
-
-    public void register(byte uri, IByteProcessor processor) {
-        processors.put(uri, processor);
-    }
+    @Resource
+    private ByteCodeModuleManager byteCodeModuleManager;
 
     @Override
     public boolean dipatch(ChannelHandlerContext ctx, Object msg) {
@@ -23,27 +21,19 @@ public class ByteDispatcher implements IDispatcher {
         boolean processable = false;
         if (msg instanceof DataTransfer) {
             DataTransfer request = (DataTransfer) msg;
-            byte mid = request.getMid();
-            IByteProcessor processor = processors.get(mid);
-            if (processor == null) {
-                Log.e("no processor found for: " + request.getMid());
-            } else {
-                processor.process(ctx, request);
-            }
-            processable = true;
+            processable = byteCodeModuleManager.handleMessage(ctx, request);
         } else if (msg instanceof ByteBuf) {
-            String log = "ByteBuf msg: ";
+            StringBuilder log = new StringBuilder("ByteBuf msg: ");
             ByteBuf buf = (ByteBuf) msg;
             byte[] arr = buf.array();
-            for (int i = 0; i < arr.length; i++) {
-                int val = arr[i];
+            for (byte val : arr) {
                 String hex = Integer.toHexString(val & 0xFF);
                 if (hex.length() == 1) {
                     hex = "0" + hex;
                 }
-                log += hex;
+                log.append(hex);
             }
-            Log.d(log);
+            Log.d(log.toString());
         }
         return processable;
     }

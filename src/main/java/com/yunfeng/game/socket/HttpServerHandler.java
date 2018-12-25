@@ -3,36 +3,37 @@ package com.yunfeng.game.socket;
 import com.yunfeng.game.dispatcher.DispatcherManager;
 import com.yunfeng.game.util.Log;
 import io.netty.channel.ChannelDuplexHandler;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Sharable
+@Component
+@ChannelHandler.Sharable
 public class HttpServerHandler extends ChannelDuplexHandler {
 
     @Override
-    public void userEventTriggered(ChannelHandlerContext ctx, Object evt)
-            throws Exception {
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
         Log.d("userEventTriggered: " + ctx.channel().id());
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) {
         Log.d("channelActive: " + ctx.channel().id());
         DispatcherManager.channelActive(ctx);
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+    public void channelInactive(ChannelHandlerContext ctx) {
         Log.d("channelInactive: " + ctx.channel().id());
         DispatcherManager.channelInactive(ctx);
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
-            throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         if (cause instanceof IOException) {
             Log.e("exceptionCaught" + cause.getMessage());
         } else {
@@ -42,8 +43,7 @@ public class HttpServerHandler extends ChannelDuplexHandler {
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg)
-            throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
         DispatcherManager.dipatch(ctx, msg);
     }
 

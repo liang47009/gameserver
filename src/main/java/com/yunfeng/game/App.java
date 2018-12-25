@@ -1,7 +1,9 @@
 package com.yunfeng.game;
 
 import com.yunfeng.game.socket.ByteServer;
-import org.yaml.snakeyaml.Yaml;
+import com.yunfeng.game.socket.HttpServer;
+import com.yunfeng.game.util.SpringUtils;
+import org.springframework.beans.FatalBeanException;
 
 /**
  * Hello world!
@@ -9,6 +11,10 @@ import org.yaml.snakeyaml.Yaml;
 public class App {
 
     public static void main(String[] args) {
-        new ByteServer().startUp("172.19.34.25", 8888);
+        ByteServer byteServer = SpringUtils.getBean("byteServer", ByteServer.class);
+        byteServer.startUp("172.19.34.44", 8888);
+        HttpServer httpServer = SpringUtils.getBean("httpServer", HttpServer.class);
+        httpServer.startUp("172.19.34.44", 8080);
+//        new ByteServer().startUp("172.19.34.44", 8888);
     }
 }

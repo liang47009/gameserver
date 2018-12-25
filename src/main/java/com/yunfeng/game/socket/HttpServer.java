@@ -1,27 +1,24 @@
 package com.yunfeng.game.socket;
 
-import com.yunfeng.game.dispatcher.DispatcherManager;
-import com.yunfeng.game.dispatcher.UriDispatcher;
-import com.yunfeng.game.processor.httpcode.*;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
+@Component
 public class HttpServer extends Server {
+
+    @Resource
+    private HttpServerInitializer httpServerInitializer;
 
     @Override
     protected boolean init() {
-        final UriDispatcher uriDispatcher = new UriDispatcher();
-        uriDispatcher.register("/", new IndexProcessor());
-        uriDispatcher.register("/favicon.ico", new FaviconProcessor());
-        uriDispatcher.register("/get_serverinfo", new GameVersionProcessor());
-        uriDispatcher.register("/guest", new GuestProcessor());
-        uriDispatcher.register("/login", new UserLoginProcessor());
-        DispatcherManager.registerDispatcher(uriDispatcher);
-
-        ChannelHandler serverHandler = new HttpServerHandler();
-        ChannelInitializer serverInitializer = new HttpServerInitializer(false, serverHandler);
-        setServerInitializer(serverInitializer);
-
+        httpServerInitializer.init(false);
         return true;
+    }
+
+    @Override
+    public ChannelInitializer getServerInitializer() {
+        return httpServerInitializer;
     }
 }

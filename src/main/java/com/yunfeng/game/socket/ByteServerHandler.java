@@ -2,13 +2,16 @@ package com.yunfeng.game.socket;
 
 import com.yunfeng.game.dispatcher.DispatcherManager;
 import com.yunfeng.game.util.Log;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Sharable
+@Component
+@ChannelHandler.Sharable
 public class ByteServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override

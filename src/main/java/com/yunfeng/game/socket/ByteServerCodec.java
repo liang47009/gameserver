@@ -3,10 +3,12 @@ package com.yunfeng.game.socket;
 import com.yunfeng.game.transfer.DataTransfer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.CombinedChannelDuplexHandler;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import io.netty.handler.codec.MessageToMessageEncoder;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
